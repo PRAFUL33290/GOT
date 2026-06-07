@@ -1,0 +1,1565 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>House of the Dragon — Le résumé complet</title>
+  <style>
+    :root {
+      --bg: #080606;
+      --blood: #7A1010;
+      --gold: #C9A44C;
+      --parchment: #D8C49A;
+      --stone: #2B2B2B;
+      --ink: #f5e6bf;
+      --green-glow: #7c9a75;
+      --black-glow: #715531;
+      --shadow: 0 18px 45px rgba(0, 0, 0, 0.35);
+      --border: 1px solid rgba(201, 164, 76, 0.25);
+      --radius: 20px;
+      --content-width: min(1180px, calc(100vw - 2rem));
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at top, rgba(122, 16, 16, 0.18), transparent 30%),
+        linear-gradient(180deg, #140d0d 0%, var(--bg) 45%, #120b0b 100%);
+      color: var(--ink);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.45)),
+        repeating-linear-gradient(
+          90deg,
+          rgba(201, 164, 76, 0.02) 0 1px,
+          transparent 1px 90px
+        );
+      pointer-events: none;
+      z-index: -2;
+    }
+
+    canvas#embers {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      opacity: 0.8;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .page-shell {
+      width: var(--content-width);
+      margin: 0 auto;
+      padding-bottom: 5rem;
+    }
+
+    .section {
+      padding: 4.5rem 0 0;
+    }
+
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      align-items: center;
+      position: relative;
+      padding: 6rem 0 4rem;
+    }
+
+    .hero-card,
+    .panel,
+    .accordion-item,
+    .timeline-item,
+    .tree,
+    .camp-column,
+    .card,
+    .dragon-card,
+    .quiz-card {
+      background:
+        linear-gradient(160deg, rgba(43, 43, 43, 0.92), rgba(8, 6, 6, 0.88)),
+        linear-gradient(180deg, rgba(201, 164, 76, 0.04), rgba(122, 16, 16, 0.03));
+      border: var(--border);
+      box-shadow: var(--shadow);
+      border-radius: var(--radius);
+      backdrop-filter: blur(6px);
+    }
+
+    .hero-card {
+      padding: clamp(2rem, 4vw, 4rem);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-card::after {
+      content: "";
+      position: absolute;
+      inset: auto -20% -35% auto;
+      width: 420px;
+      height: 420px;
+      background: radial-gradient(circle, rgba(122, 16, 16, 0.45), transparent 68%);
+      filter: blur(10px);
+      animation: pulse 6s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(0.92); opacity: 0.45; }
+      50% { transform: scale(1.08); opacity: 0.78; }
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-size: 0.78rem;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+
+    .eyebrow::before,
+    .eyebrow::after {
+      content: "";
+      width: 28px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+
+    h1, h2, h3, h4 {
+      margin: 0;
+      font-family: Cinzel, Georgia, "Times New Roman", serif;
+      letter-spacing: 0.03em;
+      color: #f9e9b9;
+    }
+
+    h1 {
+      font-size: clamp(2.8rem, 8vw, 5.4rem);
+      line-height: 1.05;
+      max-width: 12ch;
+    }
+
+    h2 {
+      font-size: clamp(2rem, 5vw, 3rem);
+      margin-bottom: 0.9rem;
+    }
+
+    h3 {
+      font-size: 1.35rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1.1rem, 2.3vw, 1.5rem);
+      color: var(--parchment);
+      margin: 1rem 0 1.5rem;
+      max-width: 42rem;
+    }
+
+    .hero-intro {
+      max-width: 52rem;
+      color: rgba(245, 230, 191, 0.82);
+      font-size: 1.04rem;
+      margin-bottom: 2rem;
+    }
+
+    .hero-actions,
+    .filter-controls,
+    .season-controls,
+    .quiz-options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.9rem;
+    }
+
+    .btn,
+    .filter-btn,
+    .season-btn,
+    .quiz-btn {
+      cursor: pointer;
+      border: 1px solid rgba(201, 164, 76, 0.5);
+      background: linear-gradient(180deg, rgba(122, 16, 16, 0.88), rgba(52, 8, 8, 0.95));
+      color: #f9eccd;
+      padding: 0.95rem 1.25rem;
+      border-radius: 999px;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+    }
+
+    .btn:hover,
+    .filter-btn:hover,
+    .season-btn:hover,
+    .quiz-btn:hover,
+    .accordion-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 24px rgba(122, 16, 16, 0.28);
+    }
+
+    .filter-btn.active,
+    .season-btn.active,
+    .quiz-btn.active {
+      background: linear-gradient(180deg, rgba(201, 164, 76, 0.95), rgba(111, 79, 20, 0.95));
+      color: #170d04;
+    }
+
+    .section-header {
+      margin-bottom: 1.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: end;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .section-header p {
+      max-width: 46rem;
+      color: rgba(245, 230, 191, 0.8);
+      margin: 0.35rem 0 0;
+    }
+
+    .intro-grid,
+    .comparison-grid,
+    .trees-grid,
+    .cards-grid,
+    .dragons-grid {
+      display: grid;
+      gap: 1.25rem;
+    }
+
+    .intro-grid {
+      grid-template-columns: 1.15fr 0.85fr;
+      align-items: stretch;
+    }
+
+    .panel {
+      padding: 1.5rem;
+    }
+
+    .stats {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .stat {
+      padding: 1rem;
+      border-radius: 16px;
+      border: 1px solid rgba(201, 164, 76, 0.15);
+      background: rgba(216, 196, 154, 0.04);
+    }
+
+    .stat strong {
+      display: block;
+      color: var(--gold);
+      font-size: 1.25rem;
+      margin-bottom: 0.15rem;
+    }
+
+    .accordion {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .accordion-item {
+      overflow: hidden;
+    }
+
+    .accordion-button {
+      width: 100%;
+      border: 0;
+      background: transparent;
+      color: inherit;
+      text-align: left;
+      padding: 1.25rem 1.4rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      font: inherit;
+      cursor: pointer;
+    }
+
+    .accordion-button span {
+      display: block;
+    }
+
+    .accordion-title {
+      font-family: Cinzel, Georgia, serif;
+      font-size: 1.15rem;
+      color: #f7e9bf;
+    }
+
+    .accordion-meta {
+      font-size: 0.9rem;
+      color: rgba(245, 230, 191, 0.72);
+      margin-top: 0.25rem;
+    }
+
+    .accordion-icon {
+      font-size: 1.6rem;
+      color: var(--gold);
+      transition: transform 0.25s ease;
+      flex-shrink: 0;
+    }
+
+    .accordion-item.open .accordion-icon {
+      transform: rotate(45deg);
+    }
+
+    .accordion-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease;
+    }
+
+    .accordion-inner {
+      padding: 0 1.4rem 1.4rem;
+      display: grid;
+      gap: 0.75rem;
+      color: rgba(245, 230, 191, 0.85);
+    }
+
+    .tags,
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+    }
+
+    .tag,
+    .badge {
+      border-radius: 999px;
+      padding: 0.36rem 0.7rem;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      border: 1px solid rgba(201, 164, 76, 0.22);
+      background: rgba(216, 196, 154, 0.07);
+    }
+
+    .badge-black,
+    .camp-black {
+      background: rgba(201, 164, 76, 0.12);
+      color: #f6d48f;
+    }
+
+    .badge-green,
+    .camp-green {
+      background: rgba(124, 154, 117, 0.18);
+      color: #d9f2c7;
+    }
+
+    .badge-crown {
+      background: rgba(122, 16, 16, 0.35);
+      color: #ffe0b9;
+    }
+
+    .badge-dragon {
+      background: rgba(135, 62, 18, 0.26);
+      color: #ffd8a2;
+    }
+
+    .timeline {
+      position: relative;
+      display: grid;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 22px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(180deg, var(--gold), rgba(201, 164, 76, 0.05));
+    }
+
+    .timeline-item {
+      position: relative;
+      padding: 1.25rem 1.25rem 1.25rem 4rem;
+      margin-left: 0.5rem;
+    }
+
+    .timeline-item::before {
+      content: "";
+      position: absolute;
+      left: 0.85rem;
+      top: 1.45rem;
+      width: 1rem;
+      height: 1rem;
+      border-radius: 50%;
+      background: radial-gradient(circle, #f2d084, var(--blood));
+      box-shadow: 0 0 0 8px rgba(201, 164, 76, 0.08);
+    }
+
+    .timeline-time {
+      color: var(--gold);
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.13em;
+      margin-bottom: 0.4rem;
+    }
+
+    .timeline-people,
+    .timeline-consequence,
+    .card p,
+    .dragon-card p,
+    .tree li {
+      color: rgba(245, 230, 191, 0.82);
+    }
+
+    .trees-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .tree {
+      padding: 1.5rem;
+    }
+
+    .tree ul {
+      list-style: none;
+      margin: 1rem 0 0;
+      padding-left: 1.1rem;
+      border-left: 1px solid rgba(201, 164, 76, 0.28);
+      display: grid;
+      gap: 0.85rem;
+    }
+
+    .tree li {
+      position: relative;
+      padding-left: 0.95rem;
+    }
+
+    .tree li::before {
+      content: "";
+      position: absolute;
+      left: -1.1rem;
+      top: 0.75rem;
+      width: 0.8rem;
+      height: 1px;
+      background: rgba(201, 164, 76, 0.28);
+    }
+
+    .nameplate {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      align-items: center;
+      margin-bottom: 0.35rem;
+    }
+
+    .nameplate strong {
+      color: #fff0c6;
+    }
+
+    .comparison-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .camp-column {
+      padding: 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .camp-column::after {
+      content: "";
+      position: absolute;
+      inset: auto -30% -30% auto;
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(122, 16, 16, 0.24), transparent 65%);
+      pointer-events: none;
+    }
+
+    .camp-column.black-side {
+      outline: 1px solid rgba(201, 164, 76, 0.2);
+    }
+
+    .camp-column.green-side {
+      outline: 1px solid rgba(124, 154, 117, 0.25);
+    }
+
+    .camp-list {
+      padding-left: 1.1rem;
+      margin: 0.75rem 0 0;
+      display: grid;
+      gap: 0.4rem;
+    }
+
+    .cards-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .card,
+    .dragon-card,
+    .quiz-card {
+      padding: 1.35rem;
+      height: 100%;
+    }
+
+    .card-top,
+    .dragon-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      align-items: start;
+      margin-bottom: 0.9rem;
+    }
+
+    .house {
+      color: var(--gold);
+      font-weight: 700;
+      font-size: 0.86rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-top: 0.25rem;
+    }
+
+    .sigil {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      border: 1px solid rgba(201, 164, 76, 0.25);
+      background:
+        radial-gradient(circle at 30% 30%, rgba(201, 164, 76, 0.28), transparent 35%),
+        linear-gradient(145deg, rgba(122, 16, 16, 0.8), rgba(43, 43, 43, 0.9));
+      box-shadow: inset 0 0 18px rgba(0, 0, 0, 0.3);
+    }
+
+    .card ul,
+    .dragon-card ul {
+      margin: 0.85rem 0 0;
+      padding-left: 1.1rem;
+      display: grid;
+      gap: 0.35rem;
+    }
+
+    .dragons-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .quiz-card {
+      text-align: center;
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    .quiz-result {
+      min-height: 3rem;
+      margin-top: 1rem;
+      font-weight: 700;
+      color: var(--parchment);
+    }
+
+    .muted {
+      color: rgba(245, 230, 191, 0.7);
+    }
+
+    .filterable.hidden {
+      display: none !important;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    footer {
+      text-align: center;
+      padding: 4rem 0 1rem;
+      color: rgba(245, 230, 191, 0.55);
+      font-size: 0.92rem;
+    }
+
+    @media (max-width: 1100px) {
+      .cards-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .dragons-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 900px) {
+      .intro-grid,
+      .comparison-grid,
+      .trees-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        min-height: auto;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .page-shell {
+        width: min(100vw - 1rem, 100%);
+      }
+
+      .section {
+        padding-top: 3.5rem;
+      }
+
+      .hero-card,
+      .panel,
+      .accordion-item,
+      .timeline-item,
+      .tree,
+      .camp-column,
+      .card,
+      .dragon-card,
+      .quiz-card {
+        border-radius: 18px;
+      }
+
+      .cards-grid,
+      .dragons-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-actions,
+      .filter-controls,
+      .season-controls,
+      .quiz-options {
+        flex-direction: column;
+      }
+
+      .btn,
+      .filter-btn,
+      .season-btn,
+      .quiz-btn {
+        width: 100%;
+      }
+
+      .timeline-item {
+        padding-left: 3.25rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="embers" aria-hidden="true"></canvas>
+
+  <main class="page-shell">
+    <section class="hero section" id="top">
+      <div class="hero-card reveal">
+        <span class="eyebrow">Feu • Sang • Héritage</span>
+        <h1>House of the Dragon — Le résumé complet</h1>
+        <p class="hero-subtitle">Saison 1 &amp; Saison 2 — La chute de la maison Targaryen</p>
+        <p class="hero-intro">
+          Une fresque dark fantasy en un seul écran pour comprendre la succession contestée de Viserys I,
+          l’opposition entre les Noirs et les Verts, les alliances brisées, les dragons majeurs et la
+          chronologie de la Danse des Dragons.
+        </p>
+        <div class="hero-actions">
+          <a class="btn" href="#chronologie">Voir la chronologie</a>
+          <a class="btn" href="#arbres">Voir les arbres généalogiques</a>
+          <a class="btn" href="#camps">Comparer les camps</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="introduction">
+      <div class="section-header reveal">
+        <div>
+          <span class="eyebrow">Prologue</span>
+          <h2>Avant la guerre, un royaume au bord de la fracture</h2>
+          <p>
+            L’histoire se déroule près de 200 ans avant <em>Game of Thrones</em>. La maison Targaryen domine
+            Westeros grâce à ses dragons, mais la paix s’effrite quand la succession de Viserys I n’est plus
+            acceptée par toute la cour.
+          </p>
+        </div>
+      </div>
+      <div class="intro-grid">
+        <article class="panel reveal">
+          <h3>Le cœur du conflit</h3>
+          <p>
+            Viserys I nomme sa fille Rhaenyra héritière officielle, mais son second mariage avec Alicent
+            Hightower crée une nouvelle lignée masculine. Dès lors, serments, ambitions et rancœurs plongent
+            les Targaryen dans une guerre civile où chaque décision alimente la chute de leur maison.
+          </p>
+        </article>
+        <aside class="panel stats reveal">
+          <div class="stat">
+            <strong>2 camps</strong>
+            <span>Noirs contre Verts, avec des alliés souvent partagés entre devoir et intérêt.</span>
+          </div>
+          <div class="stat">
+            <strong>8 dragons clés</strong>
+            <span>Des montures qui changent le rapport de force politique et militaire.</span>
+          </div>
+          <div class="stat">
+            <strong>1 guerre civile</strong>
+            <span>La Danse des Dragons transforme une crise dynastique en apocalypse familiale.</span>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section" id="recits">
+      <div class="section-header reveal">
+        <div>
+          <span class="eyebrow">Récit</span>
+          <h2>Les deux saisons, du doute à la guerre totale</h2>
+          <p>Utilisez les filtres pour isoler un camp et les boutons de saison pour concentrer la lecture.</p>
+        </div>
+        <div>
+          <div class="filter-controls" aria-label="Filtrer par camp">
+            <button class="filter-btn active" data-filter="all">Tous</button>
+            <button class="filter-btn" data-filter="black">Noirs</button>
+            <button class="filter-btn" data-filter="green">Verts</button>
+            <button class="filter-btn" data-filter="neutral">Neutres</button>
+          </div>
+          <div class="season-controls" aria-label="Filtrer par saison" style="margin-top:0.85rem;">
+            <button class="season-btn active" data-season-filter="all">Toutes</button>
+            <button class="season-btn" data-season-filter="1">Saison 1</button>
+            <button class="season-btn" data-season-filter="2">Saison 2</button>
+          </div>
+        </div>
+      </div>
+
+      <article class="reveal">
+        <h3>Résumé saison 1</h3>
+        <div class="accordion">
+          <div class="accordion-item filterable" data-camp="neutral" data-season="1">
+            <button class="accordion-button">
+              <span>
+                <span class="accordion-title">Viserys I désigne Rhaenyra comme héritière</span>
+                <span class="accordion-meta">Le choix fondateur qui brise les usages de succession.</span>
+              </span>
+              <span class="accordion-icon">+</span>
+            </button>
+            <div class="accordion-content">
+              <div class="accordion-inner">
+                <p>Viserys I impose sa fille comme héritière légitime pour éviter Daemon et préserver sa lignée directe.</p>
+                <div class="tags">
+                  <span class="tag">Viserys I</span>
+                  <span class="tag">Rhaenyra</span>
+                  <span class="tag">Conséquence : serments prêtés à une femme héritière</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item filterable" data-camp="green" data-season="1">
+            <button class="accordion-button">
+              <span>
+                <span class="accordion-title">Alicent Hightower épouse Viserys et donne naissance à Aegon II</span>
+                <span class="accordion-meta">Une nouvelle branche dynastique apparaît au cœur du pouvoir.</span>
+              </span>
+              <span class="accordion-icon">+</span>
+            </button>
+            <div class="accordion-content">
+              <div class="accordion-inner">
+                <p>Otto Hightower rapproche sa fille du roi. La naissance d’Aegon II donne un héritier masculin à ceux qui refusent le précédent établi par la nomination de Rhaenyra.</p>
+                <div class="tags">
+                  <span class="tag camp-green">Alicent</span>
+                  <span class="tag camp-green">Aegon II</span>
+                  <span class="tag">Conséquence : naissance du camp vert</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item filterable" data-camp="black" data-season="1">
+            <button class="accordion-button">
+              <span>
+                <span class="accordion-title">Rhaenyra épouse Laenor Velaryon, puis Daemon Targaryen</span>
+                <span class="accordion-meta">Elle consolide sa position avec la flotte Velaryon puis avec Daemon.</span>
+              </span>
+              <span class="accordion-icon">+</span>
+            </button>
+            <div class="accordion-content">
+              <div class="accordion-inner">
+                <p>Le mariage avec Laenor renforce l’alliance maritime, puis l’union avec Daemon soude deux figures majeures du camp noir autour de Peyredragon.</p>
+                <div class="tags">
+                  <span class="tag camp-black">Rhaenyra</span>
+                  <span class="tag camp-black">Laenor</span>
+                  <span class="tag camp-black">Daemon</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item filterable" data-camp="neutral" data-season="1">
+            <button class="accordion-button">
+              <span>
+                <span class="accordion-title">Les tensions explosent entre les enfants</span>
+                <span class="accordion-meta">Les rivalités d’adultes deviennent une haine générationnelle.</span>
+              </span>
+              <span class="accordion-icon">+</span>
+            </button>
+            <div class="accordion-content">
+              <div class="accordion-inner">
+                <p>Les accusations sur la naissance des fils de Rhaenyra, l’incident de Vhagar et les blessures d’Aemond rendent toute réconciliation impossible.</p>
+                <div class="tags">
+                  <span class="tag">Jacaerys</span>
+                  <span class="tag">Lucerys</span>
+                  <span class="tag">Aemond</span>
+                  <span class="tag">Conséquence : haine durable entre héritiers</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item filterable" data-camp="green" data-season="1">
+            <button class="accordion-button">
+              <span>
+                <span class="accordion-title">Viserys meurt et Aegon II est couronné à Port-Réal</span>
+                <span class="accordion-meta">Les Verts saisissent le Trône de Fer avant l’annonce publique.</span>
+              </span>
+              <span class="accordion-icon">+</span>
+            </button>
+            <div class="accordion-content">
+              <div class="accordion-inner">
+                <p>Alicent, Otto, Criston Cole et le conseil vert organisent une prise de pouvoir rapide pour imposer Aegon II comme roi légitime.</p>
+                <div class="tags">
+                  <span class="tag camp-green">Aegon II</span>
+                  <span class="tag camp-green">Alicent</span>
+                  <span class="tag camp-green">Criston Cole</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item filterable" data-camp="black" data-season="1">
+            <button class="accordion-button">
+              <span>
+                <span class="accordion-title">Rhaenyra est proclamée reine à Peyredragon</span>
+                <span class="accordion-meta">Les serments anciens deviennent un acte de guerre.</span>
+              </span>
+              <span class="accordion-icon">+</span>
+            </button>
+            <div class="accordion-content">
+              <div class="accordion-inner">
+                <p>Autour de Daemon, Corlys et Rhaenys, Rhaenyra revendique le trône selon la volonté formelle de Viserys I.</p>
+                <div class="tags">
+                  <span class="tag camp-black">Rhaenyra</span>
+                  <span class="tag camp-black">Corlys</span>
+                  <span class="tag camp-black">Rhaenys</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item filterable" data-camp="black" data-season="1">
+            <button class="accordion-button">
+              <span>
+                <span class="accordion-title">Lucerys est tué par Aemond et Vhagar</span>
+                <span class="accordion-meta">La frontière entre intimidation et guerre disparaît.</span>
+              </span>
+              <span class="accordion-icon">+</span>
+            </button>
+            <div class="accordion-content">
+              <div class="accordion-inner">
+                <p>À Accalmie, la poursuite d’Aemond tourne au drame : Arrax est détruit par Vhagar et Lucerys meurt. La guerre devient inévitable.</p>
+                <div class="tags">
+                  <span class="tag camp-black">Lucerys</span>
+                  <span class="tag camp-green">Aemond</span>
+                  <span class="tag badge-dragon">Vhagar contre Arrax</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="reveal" style="margin-top:2rem;">
+        <h3>Résumé saison 2</h3>
+        <div class="accordion">
+          <div class="accordion-item filterable" data-camp="black" data-season="2">
+            <button class="accordion-button">
+              <span>
+                <span class="accordion-title">Rhaenyra veut éviter l’embrasement total, mais cherche vengeance</span>
+                <span class="accordion-meta">Le deuil de Lucerys nourrit un désir de justice impossible à contenir.</span>
+              </span>
+              <span class="accordion-icon">+</span>
+            </button>
+            <div class="accordion-content">
+              <div class="accordion-inner">
+                <p>Rhaenyra hésite entre retenue stratégique et représailles. Son autorité repose sur la légitimité, mais son entourage pousse vers la violence.</p>
+                <div class="tags">
+                  <span class="tag camp-black">Rhaenyra</span>
+                  <span class="tag">Conséquence : paix presque impossible</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item filterable" data-camp="black" data-season="2">
+            <button class="accordion-button">
+              <span>
+                <span class="accordion-title">Daemon déclenche Blood and Cheese</span>
+                <span class="accordion-meta">Une vengeance indirecte frappe le cœur de la famille d’Aegon II.</span>
+              </span>
+              <span class="accordion-icon">+</span>
+            </button>
+            <div class="accordion-content">
+              <div class="accordion-inner">
+                <p>Daemon orchestre une attaque clandestine contre les Verts. Le meurtre du fils d’Aegon II radicalise définitivement le conflit.</p>
+                <div class="tags">
+                  <span class="tag camp-black">Daemon</span>
+                  <span class="tag camp-green">Aegon II</span>
+                  <span class="tag">Conséquence : cycle de représailles sans retour</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item filterable" data-camp="green" data-season="2">
+            <button class="accordion-button">
+              <span>
+                <span class="accordion-title">Aegon II veut prouver qu’il est un vrai roi</span>
+                <span class="accordion-meta">Sa colère et son besoin de reconnaissance aggravent le chaos.</span>
+              </span>
+              <span class="accordion-icon">+</span>
+            </button>
+            <div class="accordion-content">
+              <div class="accordion-inner">
+                <p>Obsédé par la vengeance et la légitimité, Aegon II agit de façon impulsive, tandis que Criston Cole transforme cette rage en stratégie militaire.</p>
+                <div class="tags">
+                  <span class="tag camp-green">Aegon II</span>
+                  <span class="tag camp-green">Criston Cole</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item filterable" data-camp="green" data-season="2">
+            <button class="accordion-button">
+              <span>
+                <span class="accordion-title">Aemond devient plus dangereux et prend le contrôle</span>
+                <span class="accordion-meta">Son ambition personnelle dépasse la simple défense des Verts.</span>
+              </span>
+              <span class="accordion-icon">+</span>
+            </button>
+            <div class="accordion-content">
+              <div class="accordion-inner">
+                <p>Aemond, avec Vhagar, incarne la force brute du camp vert. Quand Aegon II est affaibli, il occupe davantage l’espace du commandement.</p>
+                <div class="tags">
+                  <span class="tag camp-green">Aemond</span>
+                  <span class="tag badge-dragon">Vhagar</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item filterable" data-camp="neutral" data-season="2">
+            <button class="accordion-button">
+              <span>
+                <span class="accordion-title">La bataille de Rook’s Rest change l’équilibre de la guerre</span>
+                <span class="accordion-meta">Rhaenys meurt avec Meleys, Aegon II est gravement blessé.</span>
+              </span>
+              <span class="accordion-icon">+</span>
+            </button>
+            <div class="accordion-content">
+              <div class="accordion-inner">
+                <p>La bataille révèle la brutalité de la guerre des dragons. La perte de Rhaenys affaiblit les Noirs, tandis que le roi vert sort ravagé du combat.</p>
+                <div class="tags">
+                  <span class="tag camp-black">Rhaenys</span>
+                  <span class="tag camp-green">Aegon II</span>
+                  <span class="tag camp-green">Aemond</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item filterable" data-camp="black" data-season="2">
+            <button class="accordion-button">
+              <span>
+                <span class="accordion-title">Daemon à Harrenhal : visions, regrets et ambition</span>
+                <span class="accordion-meta">La guerre extérieure devient aussi une guerre intérieure.</span>
+              </span>
+              <span class="accordion-icon">+</span>
+            </button>
+            <div class="accordion-content">
+              <div class="accordion-inner">
+                <p>À Harrenhal, Daemon affronte ses fantômes, ses désirs de couronne et les conséquences morales de la guerre qu’il appelle pourtant de ses vœux.</p>
+                <div class="tags">
+                  <span class="tag camp-black">Daemon</span>
+                  <span class="tag">Conséquence : chef plus instable mais toujours central</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item filterable" data-camp="black" data-season="2">
+            <button class="accordion-button">
+              <span>
+                <span class="accordion-title">Rhaenyra cherche de nouveaux dragonniers</span>
+                <span class="accordion-meta">Les graines de dragon promettent une guerre encore plus vaste.</span>
+              </span>
+              <span class="accordion-icon">+</span>
+            </button>
+            <div class="accordion-content">
+              <div class="accordion-inner">
+                <p>Pour élargir son avantage aérien, Rhaenyra ouvre l’accès aux dragons à de nouveaux prétendants ayant du sang valyrien : les graines de dragon.</p>
+                <div class="tags">
+                  <span class="tag camp-black">Rhaenyra</span>
+                  <span class="tag">Graines de dragon</span>
+                  <span class="tag">Conséquence : escalade militaire générale</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section class="section" id="chronologie">
+      <div class="section-header reveal">
+        <div>
+          <span class="eyebrow">Chronologie interactive</span>
+          <h2>Les étapes de la Danse des Dragons</h2>
+          <p>Chaque jalon présente le fait, les personnages impliqués et sa conséquence politique.</p>
+        </div>
+      </div>
+      <div class="timeline">
+        <article class="timeline-item filterable reveal" data-camp="neutral" data-season="1">
+          <div class="timeline-time">Règne de Viserys I</div>
+          <h3>Une paix brillante mais fragile</h3>
+          <p>Le royaume semble prospère sous Viserys I, mais sa cour masque déjà des rivalités familiales profondes.</p>
+          <p class="timeline-people"><strong>Personnages :</strong> Viserys I, Daemon, Otto Hightower.</p>
+          <p class="timeline-consequence"><strong>Conséquence politique :</strong> stabilité apparente, succession toujours sensible.</p>
+        </article>
+        <article class="timeline-item filterable reveal" data-camp="neutral" data-season="1">
+          <div class="timeline-time">Début du règne</div>
+          <h3>Désignation de Rhaenyra</h3>
+          <p>Viserys rompt la tradition masculine pour nommer sa fille héritière.</p>
+          <p class="timeline-people"><strong>Personnages :</strong> Viserys I, Rhaenyra, seigneurs du royaume.</p>
+          <p class="timeline-consequence"><strong>Conséquence politique :</strong> un serment officiel, contesté plus tard.</p>
+        </article>
+        <article class="timeline-item filterable reveal" data-camp="green" data-season="1">
+          <div class="timeline-time">Quelques années plus tard</div>
+          <h3>Mariage Alicent / Viserys</h3>
+          <p>La cour accueille une seconde reine issue des Hightower.</p>
+          <p class="timeline-people"><strong>Personnages :</strong> Alicent, Viserys I, Otto Hightower.</p>
+          <p class="timeline-consequence"><strong>Conséquence politique :</strong> le camp vert gagne un accès direct au trône.</p>
+        </article>
+        <article class="timeline-item filterable reveal" data-camp="green" data-season="1">
+          <div class="timeline-time">Naissance dynastique</div>
+          <h3>Naissance d’Aegon II</h3>
+          <p>Un fils royal masculin offre une alternative à Rhaenyra.</p>
+          <p class="timeline-people"><strong>Personnages :</strong> Alicent, Aegon II, Viserys I.</p>
+          <p class="timeline-consequence"><strong>Conséquence politique :</strong> les opposants à Rhaenyra se structurent.</p>
+        </article>
+        <article class="timeline-item filterable reveal" data-camp="black" data-season="1">
+          <div class="timeline-time">Alliance maritime</div>
+          <h3>Mariage Rhaenyra / Laenor</h3>
+          <p>La future reine s’adosse à la puissance navale des Velaryon.</p>
+          <p class="timeline-people"><strong>Personnages :</strong> Rhaenyra, Laenor, Corlys, Rhaenys.</p>
+          <p class="timeline-consequence"><strong>Conséquence politique :</strong> les Noirs renforcent leur prestige et leur flotte.</p>
+        </article>
+        <article class="timeline-item filterable reveal" data-camp="black" data-season="1">
+          <div class="timeline-time">Après Driftmark</div>
+          <h3>Mariage Rhaenyra / Daemon</h3>
+          <p>Deux figures targaryennes majeures unissent leurs ambitions à Peyredragon.</p>
+          <p class="timeline-people"><strong>Personnages :</strong> Rhaenyra, Daemon.</p>
+          <p class="timeline-consequence"><strong>Conséquence politique :</strong> consolidation militaire et symbolique du camp noir.</p>
+        </article>
+        <article class="timeline-item filterable reveal" data-camp="neutral" data-season="1">
+          <div class="timeline-time">Fin de règne</div>
+          <h3>Mort de Viserys</h3>
+          <p>La disparition du roi enlève le dernier frein à la prise de pouvoir.</p>
+          <p class="timeline-people"><strong>Personnages :</strong> Viserys I, Alicent, Otto.</p>
+          <p class="timeline-consequence"><strong>Conséquence politique :</strong> le vide du pouvoir déclenche le coup de force vert.</p>
+        </article>
+        <article class="timeline-item filterable reveal" data-camp="green" data-season="1">
+          <div class="timeline-time">Immédiatement après</div>
+          <h3>Couronnement d’Aegon II</h3>
+          <p>Port-Réal soutient un nouveau roi avant que Rhaenyra ne réagisse.</p>
+          <p class="timeline-people"><strong>Personnages :</strong> Aegon II, Alicent, Criston Cole.</p>
+          <p class="timeline-consequence"><strong>Conséquence politique :</strong> appropriation du Trône de Fer par les Verts.</p>
+        </article>
+        <article class="timeline-item filterable reveal" data-camp="black" data-season="1">
+          <div class="timeline-time">Peyredragon</div>
+          <h3>Couronnement de Rhaenyra</h3>
+          <p>Les Noirs opposent un pouvoir concurrent fondé sur la volonté du défunt roi.</p>
+          <p class="timeline-people"><strong>Personnages :</strong> Rhaenyra, Daemon, Corlys, Rhaenys.</p>
+          <p class="timeline-consequence"><strong>Conséquence politique :</strong> dualité du pouvoir, guerre ouverte imminente.</p>
+        </article>
+        <article class="timeline-item filterable reveal" data-camp="black" data-season="1">
+          <div class="timeline-time">Fin de saison 1</div>
+          <h3>Mort de Lucerys</h3>
+          <p>Le premier grand sang princier est versé dans le ciel orageux.</p>
+          <p class="timeline-people"><strong>Personnages :</strong> Lucerys, Aemond, Vhagar.</p>
+          <p class="timeline-consequence"><strong>Conséquence politique :</strong> la vengeance supplante toute négociation.</p>
+        </article>
+        <article class="timeline-item filterable reveal" data-camp="black" data-season="2">
+          <div class="timeline-time">Début saison 2</div>
+          <h3>Blood and Cheese</h3>
+          <p>Une opération secrète menée contre les Verts tue l’héritier d’Aegon II.</p>
+          <p class="timeline-people"><strong>Personnages :</strong> Daemon, Aegon II, Helaena.</p>
+          <p class="timeline-consequence"><strong>Conséquence politique :</strong> la guerre devient personnelle et irréversible.</p>
+        </article>
+        <article class="timeline-item filterable reveal" data-camp="neutral" data-season="2">
+          <div class="timeline-time">Milieu saison 2</div>
+          <h3>Bataille de Rook’s Rest</h3>
+          <p>Premier grand choc de dragons de la guerre ouverte.</p>
+          <p class="timeline-people"><strong>Personnages :</strong> Rhaenys, Aegon II, Aemond, Meleys, Sunfyre, Vhagar.</p>
+          <p class="timeline-consequence"><strong>Conséquence politique :</strong> lourdes pertes, pouvoir vert fragilisé mais non brisé.</p>
+        </article>
+        <article class="timeline-item filterable reveal" data-camp="black" data-season="2">
+          <div class="timeline-time">Fin saison 2</div>
+          <h3>Recherche des nouveaux dragonniers</h3>
+          <p>Rhaenyra élargit sa guerre en mobilisant les graines de dragon.</p>
+          <p class="timeline-people"><strong>Personnages :</strong> Rhaenyra, Jacaerys, prétendants valyriens.</p>
+          <p class="timeline-consequence"><strong>Conséquence politique :</strong> la prochaine phase promet une confrontation encore plus vaste.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="arbres">
+      <div class="section-header reveal">
+        <div>
+          <span class="eyebrow">Arbres généalogiques</span>
+          <h2>Les lignées au centre du conflit</h2>
+          <p>Deux arbres visuels pour suivre la famille royale et la descendance de Rhaenyra.</p>
+        </div>
+      </div>
+      <div class="trees-grid">
+        <article class="tree reveal">
+          <h3>Arbre 1 — Famille royale Targaryen</h3>
+          <ul>
+            <li>
+              <div class="nameplate">
+                <strong>Viserys I Targaryen</strong>
+                <span class="badge badge-crown">Roi</span>
+              </div>
+              <ul>
+                <li>
+                  <div class="nameplate">
+                    <strong>Aemma Arryn</strong>
+                  </div>
+                  <ul>
+                    <li>
+                      <div class="nameplate">
+                        <strong>Rhaenyra Targaryen</strong>
+                        <span class="badge badge-black">Camp Noir</span>
+                        <span class="badge badge-crown">Reine revendiquée</span>
+                        <span class="badge badge-dragon">Dragon lié : Syrax</span>
+                      </div>
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <div class="nameplate">
+                    <strong>Alicent Hightower</strong>
+                    <span class="badge badge-green">Camp Vert</span>
+                  </div>
+                  <ul>
+                    <li><div class="nameplate"><strong>Aegon II</strong><span class="badge badge-green">Camp Vert</span><span class="badge badge-crown">Roi</span><span class="badge badge-dragon">Sunfyre</span></div></li>
+                    <li><div class="nameplate"><strong>Helaena</strong><span class="badge badge-green">Camp Vert</span><span class="badge badge-dragon">Dreamfyre</span></div></li>
+                    <li><div class="nameplate"><strong>Aemond</strong><span class="badge badge-green">Camp Vert</span><span class="badge badge-dragon">Vhagar</span></div></li>
+                    <li><div class="nameplate"><strong>Daeron</strong><span class="badge badge-green">Camp Vert</span></div></li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </article>
+        <article class="tree reveal">
+          <h3>Arbre 2 — Descendance de Rhaenyra</h3>
+          <ul>
+            <li>
+              <div class="nameplate">
+                <strong>Rhaenyra Targaryen</strong>
+                <span class="badge badge-black">Camp Noir</span>
+                <span class="badge badge-dragon">Syrax</span>
+              </div>
+              <ul>
+                <li>
+                  <div class="nameplate">
+                    <strong>Avec Laenor Velaryon (officiellement)</strong>
+                  </div>
+                  <ul>
+                    <li><div class="nameplate"><strong>Jacaerys</strong><span class="badge badge-black">Camp Noir</span><span class="badge badge-dragon">Vermax</span></div></li>
+                    <li><div class="nameplate"><strong>Lucerys</strong><span class="badge badge-black">Camp Noir</span><span class="badge badge-dragon">Arrax</span></div></li>
+                    <li><div class="nameplate"><strong>Joffrey</strong><span class="badge badge-black">Camp Noir</span></div></li>
+                  </ul>
+                </li>
+                <li>
+                  <div class="nameplate">
+                    <strong>Avec Daemon Targaryen</strong>
+                    <span class="badge badge-black">Camp Noir</span>
+                    <span class="badge badge-dragon">Caraxes</span>
+                  </div>
+                  <ul>
+                    <li><div class="nameplate"><strong>Aegon le Jeune</strong><span class="badge badge-black">Camp Noir</span></div></li>
+                    <li><div class="nameplate"><strong>Viserys</strong><span class="badge badge-black">Camp Noir</span></div></li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="camps">
+      <div class="section-header reveal">
+        <div>
+          <span class="eyebrow">Les camps</span>
+          <h2>Les Noirs contre les Verts</h2>
+          <p>Deux visions du pouvoir, deux centres d’influence, une même obsession : le Trône de Fer.</p>
+        </div>
+      </div>
+      <div class="comparison-grid">
+        <article class="camp-column black-side filterable reveal" data-camp="black" data-season="1 2">
+          <h3>Les Noirs</h3>
+          <p><strong>Chef :</strong> Rhaenyra Targaryen</p>
+          <p><strong>Base :</strong> Peyredragon</p>
+          <p><strong>Objectif :</strong> récupérer le trône selon la volonté officielle de Viserys.</p>
+          <ul class="camp-list">
+            <li><strong>Alliés :</strong> Daemon, Corlys Velaryon, Rhaenys, Jacaerys.</li>
+            <li><strong>Forces :</strong> plusieurs dragons, légitimité du serment, flotte Velaryon.</li>
+            <li><strong>Faiblesses :</strong> contestation de ses enfants, hésitations politiques, isolement.</li>
+          </ul>
+        </article>
+        <article class="camp-column green-side filterable reveal" data-camp="green" data-season="1 2">
+          <h3>Les Verts</h3>
+          <p><strong>Chef :</strong> Aegon II Targaryen</p>
+          <p><strong>Influence :</strong> Alicent Hightower, Otto Hightower, Aemond, Criston Cole.</p>
+          <p><strong>Base :</strong> Port-Réal</p>
+          <ul class="camp-list">
+            <li><strong>Objectif :</strong> imposer Aegon II comme roi.</li>
+            <li><strong>Forces :</strong> contrôle du Trône de Fer, capitale, institutions, Vhagar.</li>
+            <li><strong>Faiblesses :</strong> divisions internes, impulsivité d’Aegon, ambition d’Aemond.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="personnages">
+      <div class="section-header reveal">
+        <div>
+          <span class="eyebrow">Personnages</span>
+          <h2>Qui veut quoi, qui soutient qui, qui précipite la guerre</h2>
+          <p>Chaque carte résume un objectif, une action marquante et sa conséquence.</p>
+        </div>
+      </div>
+      <div class="cards-grid">
+        <article class="card filterable reveal" data-camp="neutral" data-season="1">
+          <div class="card-top"><div><h3>Viserys I</h3><div class="house">Maison Targaryen</div></div><div class="sigil"></div></div>
+          <div class="badge-row"><span class="badge">Neutre</span><span class="badge badge-crown">Roi</span></div>
+          <ul>
+            <li><strong>Dragon :</strong> Aucun</li>
+            <li><strong>Objectif :</strong> préserver la paix familiale.</li>
+            <li><strong>Action importante :</strong> nomme Rhaenyra héritière.</li>
+            <li><strong>Conséquence :</strong> crée la fracture dynastique centrale.</li>
+          </ul>
+        </article>
+        <article class="card filterable reveal" data-camp="black" data-season="1 2">
+          <div class="card-top"><div><h3>Rhaenyra</h3><div class="house">Maison Targaryen</div></div><div class="sigil"></div></div>
+          <div class="badge-row"><span class="badge badge-black">Camp Noir</span><span class="badge badge-dragon">Syrax</span></div>
+          <ul>
+            <li><strong>Objectif :</strong> faire respecter son droit au trône.</li>
+            <li><strong>Action importante :</strong> se fait proclamer reine à Peyredragon.</li>
+            <li><strong>Conséquence :</strong> devient le centre politique et symbolique des Noirs.</li>
+          </ul>
+        </article>
+        <article class="card filterable reveal" data-camp="green" data-season="1 2">
+          <div class="card-top"><div><h3>Alicent</h3><div class="house">Maison Hightower</div></div><div class="sigil"></div></div>
+          <div class="badge-row"><span class="badge badge-green">Camp Vert</span></div>
+          <ul>
+            <li><strong>Dragon :</strong> Aucun</li>
+            <li><strong>Objectif :</strong> protéger ses enfants.</li>
+            <li><strong>Action importante :</strong> soutient l’élévation d’Aegon II.</li>
+            <li><strong>Conséquence :</strong> légitime politiquement le camp vert au sein de la cour.</li>
+          </ul>
+        </article>
+        <article class="card filterable reveal" data-camp="black" data-season="1 2">
+          <div class="card-top"><div><h3>Daemon</h3><div class="house">Maison Targaryen</div></div><div class="sigil"></div></div>
+          <div class="badge-row"><span class="badge badge-black">Camp Noir</span><span class="badge badge-dragon">Caraxes</span></div>
+          <ul>
+            <li><strong>Objectif :</strong> le pouvoir, la guerre et la grandeur targaryenne.</li>
+            <li><strong>Action importante :</strong> lance Blood and Cheese puis part à Harrenhal.</li>
+            <li><strong>Conséquence :</strong> accélère la brutalisation du conflit.</li>
+          </ul>
+        </article>
+        <article class="card filterable reveal" data-camp="green" data-season="1 2">
+          <div class="card-top"><div><h3>Aegon II</h3><div class="house">Maison Targaryen</div></div><div class="sigil"></div></div>
+          <div class="badge-row"><span class="badge badge-green">Camp Vert</span><span class="badge badge-crown">Roi</span><span class="badge badge-dragon">Sunfyre</span></div>
+          <ul>
+            <li><strong>Objectif :</strong> être reconnu comme roi.</li>
+            <li><strong>Action importante :</strong> se fait couronner à Port-Réal puis attaque à Rook’s Rest.</li>
+            <li><strong>Conséquence :</strong> renforce la guerre, mais se retrouve gravement blessé.</li>
+          </ul>
+        </article>
+        <article class="card filterable reveal" data-camp="green" data-season="1 2">
+          <div class="card-top"><div><h3>Aemond</h3><div class="house">Maison Targaryen</div></div><div class="sigil"></div></div>
+          <div class="badge-row"><span class="badge badge-green">Camp Vert</span><span class="badge badge-dragon">Vhagar</span></div>
+          <ul>
+            <li><strong>Objectif :</strong> prouver sa supériorité et contrôler la guerre.</li>
+            <li><strong>Action importante :</strong> tue Lucerys puis domine la stratégie verte.</li>
+            <li><strong>Conséquence :</strong> personnifie l’escalade irréversible du conflit.</li>
+          </ul>
+        </article>
+        <article class="card filterable reveal" data-camp="green" data-season="1 2">
+          <div class="card-top"><div><h3>Otto Hightower</h3><div class="house">Maison Hightower</div></div><div class="sigil"></div></div>
+          <div class="badge-row"><span class="badge badge-green">Camp Vert</span></div>
+          <ul>
+            <li><strong>Dragon :</strong> Aucun</li>
+            <li><strong>Objectif :</strong> placer sa famille au pouvoir.</li>
+            <li><strong>Action importante :</strong> prépare l’accession d’Aegon II.</li>
+            <li><strong>Conséquence :</strong> transforme une intrigue de cour en coup d’État.</li>
+          </ul>
+        </article>
+        <article class="card filterable reveal" data-camp="black" data-season="1 2">
+          <div class="card-top"><div><h3>Rhaenys</h3><div class="house">Maison Targaryen / Velaryon</div></div><div class="sigil"></div></div>
+          <div class="badge-row"><span class="badge badge-black">Camp Noir</span><span class="badge badge-dragon">Meleys</span></div>
+          <ul>
+            <li><strong>Objectif :</strong> défendre l’honneur Velaryon et Rhaenyra.</li>
+            <li><strong>Action importante :</strong> combat à Rook’s Rest.</li>
+            <li><strong>Conséquence :</strong> sa mort prive les Noirs d’une stratège majeure.</li>
+          </ul>
+        </article>
+        <article class="card filterable reveal" data-camp="black" data-season="1 2">
+          <div class="card-top"><div><h3>Corlys</h3><div class="house">Maison Velaryon</div></div><div class="sigil"></div></div>
+          <div class="badge-row"><span class="badge badge-black">Camp Noir</span></div>
+          <ul>
+            <li><strong>Dragon :</strong> Aucun</li>
+            <li><strong>Objectif :</strong> préserver la puissance de sa maison.</li>
+            <li><strong>Action importante :</strong> apporte la flotte Velaryon à Rhaenyra.</li>
+            <li><strong>Conséquence :</strong> offre aux Noirs un avantage stratégique maritime.</li>
+          </ul>
+        </article>
+        <article class="card filterable reveal" data-camp="black" data-season="1 2">
+          <div class="card-top"><div><h3>Jacaerys</h3><div class="house">Maison Targaryen / Velaryon</div></div><div class="sigil"></div></div>
+          <div class="badge-row"><span class="badge badge-black">Camp Noir</span><span class="badge badge-dragon">Vermax</span></div>
+          <ul>
+            <li><strong>Objectif :</strong> soutenir sa mère et créer des alliances.</li>
+            <li><strong>Action importante :</strong> mène la diplomatie des Noirs.</li>
+            <li><strong>Conséquence :</strong> élargit la base politique de Rhaenyra.</li>
+          </ul>
+        </article>
+        <article class="card filterable reveal" data-camp="black" data-season="1">
+          <div class="card-top"><div><h3>Lucerys</h3><div class="house">Maison Targaryen / Velaryon</div></div><div class="sigil"></div></div>
+          <div class="badge-row"><span class="badge badge-black">Camp Noir</span><span class="badge badge-dragon">Arrax</span></div>
+          <ul>
+            <li><strong>Objectif :</strong> servir la cause de sa mère.</li>
+            <li><strong>Action importante :</strong> part en mission diplomatique à Accalmie.</li>
+            <li><strong>Conséquence :</strong> sa mort déclenche l’escalade finale de la saison 1.</li>
+          </ul>
+        </article>
+        <article class="card filterable reveal" data-camp="green" data-season="1 2">
+          <div class="card-top"><div><h3>Criston Cole</h3><div class="house">Garde Royale</div></div><div class="sigil"></div></div>
+          <div class="badge-row"><span class="badge badge-green">Camp Vert</span></div>
+          <ul>
+            <li><strong>Dragon :</strong> Aucun</li>
+            <li><strong>Objectif :</strong> défendre l’ordre vert et écraser les Noirs.</li>
+            <li><strong>Action importante :</strong> passe de protecteur de Rhaenyra à ennemi central des Noirs.</li>
+            <li><strong>Conséquence :</strong> devient un moteur militaire et idéologique du camp vert.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="dragons">
+      <div class="section-header reveal">
+        <div>
+          <span class="eyebrow">Dragons</span>
+          <h2>Les montures qui décident du destin des royaumes</h2>
+          <p>Leur importance dépasse le champ de bataille : chaque dragon représente une légitimité, une peur et une promesse de destruction.</p>
+        </div>
+      </div>
+      <div class="dragons-grid">
+        <article class="dragon-card filterable reveal" data-camp="black" data-season="1 2"><div class="dragon-top"><div><h3>Syrax</h3><div class="house">Cavalière : Rhaenyra</div></div><div class="sigil"></div></div><p><strong>Camp :</strong> Noir</p><p><strong>Importance :</strong> symbole direct de la légitimité de Rhaenyra.</p><p><strong>Statut après saison 2 :</strong> vivant, toujours au cœur du pouvoir noir.</p></article>
+        <article class="dragon-card filterable reveal" data-camp="black" data-season="1 2"><div class="dragon-top"><div><h3>Caraxes</h3><div class="house">Cavalier : Daemon</div></div><div class="sigil"></div></div><p><strong>Camp :</strong> Noir</p><p><strong>Importance :</strong> dragon de guerre, associé à l’agressivité de Daemon.</p><p><strong>Statut après saison 2 :</strong> vivant, prêt pour la prochaine phase du conflit.</p></article>
+        <article class="dragon-card filterable reveal" data-camp="green" data-season="1 2"><div class="dragon-top"><div><h3>Vhagar</h3><div class="house">Cavalier : Aemond</div></div><div class="sigil"></div></div><p><strong>Camp :</strong> Vert</p><p><strong>Importance :</strong> le plus grand atout militaire des Verts.</p><p><strong>Statut après saison 2 :</strong> vivant, arme dominante du camp vert.</p></article>
+        <article class="dragon-card filterable reveal" data-camp="green" data-season="1 2"><div class="dragon-top"><div><h3>Sunfyre</h3><div class="house">Cavalier : Aegon II</div></div><div class="sigil"></div></div><p><strong>Camp :</strong> Vert</p><p><strong>Importance :</strong> dragon royal lié au prestige d’Aegon II.</p><p><strong>Statut après saison 2 :</strong> grièvement touché après Rook’s Rest.</p></article>
+        <article class="dragon-card filterable reveal" data-camp="black" data-season="1 2"><div class="dragon-top"><div><h3>Meleys</h3><div class="house">Cavalière : Rhaenys</div></div><div class="sigil"></div></div><p><strong>Camp :</strong> Noir</p><p><strong>Importance :</strong> l’une des plus redoutables montures des Noirs.</p><p><strong>Statut après saison 2 :</strong> morte à Rook’s Rest avec Rhaenys.</p></article>
+        <article class="dragon-card filterable reveal" data-camp="black" data-season="1 2"><div class="dragon-top"><div><h3>Vermax</h3><div class="house">Cavalier : Jacaerys</div></div><div class="sigil"></div></div><p><strong>Camp :</strong> Noir</p><p><strong>Importance :</strong> appuie les missions diplomatiques et l’avenir du camp noir.</p><p><strong>Statut après saison 2 :</strong> vivant.</p></article>
+        <article class="dragon-card filterable reveal" data-camp="black" data-season="1"><div class="dragon-top"><div><h3>Arrax</h3><div class="house">Cavalier : Lucerys</div></div><div class="sigil"></div></div><p><strong>Camp :</strong> Noir</p><p><strong>Importance :</strong> jeune dragon lié au drame fondateur de la guerre.</p><p><strong>Statut après saison 2 :</strong> mort avec Lucerys à la fin de la saison 1.</p></article>
+        <article class="dragon-card filterable reveal" data-camp="green" data-season="1 2"><div class="dragon-top"><div><h3>Dreamfyre</h3><div class="house">Cavalière : Helaena</div></div><div class="sigil"></div></div><p><strong>Camp :</strong> Vert</p><p><strong>Importance :</strong> dragon associé à une branche plus tragique et passive des Verts.</p><p><strong>Statut après saison 2 :</strong> vivant, peu engagé directement.</p></article>
+      </div>
+    </section>
+
+    <section class="section" id="quiz">
+      <div class="quiz-card reveal">
+        <span class="eyebrow">Mini quiz final</span>
+        <h2>Quel camp aurais-tu choisi ?</h2>
+        <p class="muted">Choisis ton inclinaison politique pour voir le profil correspondant.</p>
+        <div class="quiz-options">
+          <button class="quiz-btn" data-answer="rhaenyra">Rhaenyra</button>
+          <button class="quiz-btn" data-answer="aegon">Aegon</button>
+          <button class="quiz-btn" data-answer="neutral">Neutre</button>
+          <button class="quiz-btn" data-answer="velaryon">Maison Velaryon</button>
+        </div>
+        <div class="quiz-result" id="quiz-result" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <footer>
+      Page originale inspirée d’une ambiance médiévale dark fantasy, sans visuels officiels ni images copyrightées.
+    </footer>
+  </main>
+
+  <script>
+    const accordionItems = document.querySelectorAll('.accordion-item');
+    accordionItems.forEach((item, index) => {
+      const button = item.querySelector('.accordion-button');
+      const content = item.querySelector('.accordion-content');
+      if (index === 0) {
+        item.classList.add('open');
+        content.style.maxHeight = `${content.scrollHeight}px`;
+      }
+      button.addEventListener('click', () => {
+        const open = item.classList.contains('open');
+        item.classList.toggle('open', !open);
+        content.style.maxHeight = open ? '0px' : `${content.scrollHeight}px`;
+      });
+    });
+
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const seasonButtons = document.querySelectorAll('.season-btn');
+    const filterableElements = document.querySelectorAll('.filterable');
+    let activeCamp = 'all';
+    let activeSeason = 'all';
+
+    function matchesSeason(value, seasonFilter) {
+      if (seasonFilter === 'all') return true;
+      return value.split(' ').includes(seasonFilter);
+    }
+
+    function applyFilters() {
+      filterableElements.forEach((element) => {
+        const camp = element.dataset.camp || 'neutral';
+        const season = element.dataset.season || '1';
+        const showCamp = activeCamp === 'all' || camp === activeCamp;
+        const showSeason = matchesSeason(season, activeSeason);
+        element.classList.toggle('hidden', !(showCamp && showSeason));
+      });
+    }
+
+    filterButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        filterButtons.forEach((btn) => btn.classList.remove('active'));
+        button.classList.add('active');
+        activeCamp = button.dataset.filter;
+        applyFilters();
+      });
+    });
+
+    seasonButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        seasonButtons.forEach((btn) => btn.classList.remove('active'));
+        button.classList.add('active');
+        activeSeason = button.dataset.seasonFilter;
+        applyFilters();
+      });
+    });
+
+    applyFilters();
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.reveal').forEach((element) => observer.observe(element));
+
+    const quizResult = document.getElementById('quiz-result');
+    const quizResponses = {
+      rhaenyra: 'Tu choisis les Noirs : priorité à la légitimité, aux anciens serments et à l’héritage désigné par Viserys.',
+      aegon: 'Tu rejoins les Verts : priorité à l’ordre du royaume, au pouvoir déjà installé et à l’autorité immédiate de Port-Réal.',
+      neutral: 'Tu restes neutre : tu vois surtout une famille qui s’autodétruit et un royaume condamné à payer le prix.',
+      velaryon: 'Tu penches vers la Maison Velaryon : puissance navale, sens de l’honneur et pragmatisme au service des Noirs.'
+    };
+
+    document.querySelectorAll('.quiz-btn').forEach((button) => {
+      button.addEventListener('click', () => {
+        document.querySelectorAll('.quiz-btn').forEach((btn) => btn.classList.remove('active'));
+        button.classList.add('active');
+        quizResult.textContent = quizResponses[button.dataset.answer];
+      });
+    });
+
+    const canvas = document.getElementById('embers');
+    const ctx = canvas.getContext('2d');
+    const embers = [];
+    const emberCount = 80;
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+
+    function createEmber() {
+      return {
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: Math.random() * 2.8 + 0.6,
+        speedY: Math.random() * 0.6 + 0.15,
+        speedX: (Math.random() - 0.5) * 0.35,
+        alpha: Math.random() * 0.55 + 0.2
+      };
+    }
+
+    function seedEmbers() {
+      embers.length = 0;
+      for (let i = 0; i < emberCount; i++) {
+        embers.push(createEmber());
+      }
+    }
+
+    function drawEmbers() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      embers.forEach((ember) => {
+        ctx.beginPath();
+        ctx.fillStyle = `rgba(255, ${120 + Math.random() * 70}, ${50 + Math.random() * 40}, ${ember.alpha})`;
+        ctx.shadowBlur = 12;
+        ctx.shadowColor = 'rgba(255, 120, 40, 0.5)';
+        ctx.arc(ember.x, ember.y, ember.r, 0, Math.PI * 2);
+        ctx.fill();
+
+        ember.y -= ember.speedY;
+        ember.x += ember.speedX;
+
+        if (ember.y < -10 || ember.x < -10 || ember.x > canvas.width + 10) {
+          ember.x = Math.random() * canvas.width;
+          ember.y = canvas.height + 10;
+        }
+      });
+
+      requestAnimationFrame(drawEmbers);
+    }
+
+    resizeCanvas();
+    seedEmbers();
+    drawEmbers();
+    window.addEventListener('resize', () => {
+      resizeCanvas();
+      seedEmbers();
+    });
+  </script>
+</body>
+</html>
